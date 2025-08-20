@@ -27,11 +27,10 @@ FRESH=false
 if [[ "${1:-}" == "--fresh" ]]; then
 FRESH=true
 fi
-
+sudo dnf install yarn -y
 if ! command -v gclient &> /dev/null; then
 echo "depot_tools not found. Installing..."
 git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git ${DEPOT_TOOLS_DIR}
-#sudo dnf install depot_tools && setup-depot-tools
 export PATH="${DEPOT_TOOLS_DIR}:${PATH}"
 echo "Installed depot_tools at $DEPOT_TOOLS_DIR and added to PATH."
  else
