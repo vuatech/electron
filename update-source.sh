@@ -7,7 +7,7 @@ TARBALL="electron-${VERSION}.tar.gz"
 SPEC_FILE="electron.spec"
 GIT_CACHE_PATH="${PWD}/.git_cache"
 WORK_DIR="${PWD}/electron"
-DEPOT_TOOLS_DIR="${HOME}/depot_tools"
+DEPOT_TOOLS_DIR="${PWD}/depot_tools"
 
 ARCH=$(uname -m)
 case "$ARCH" in
