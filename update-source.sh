@@ -57,12 +57,13 @@ cd ${DEPOT_TOOLS_DIR}
 ./update_depot_tools
 ./gclient
 
+rm -rf "${WORK_DIR}"
 mkdir -p "${GIT_CACHE_PATH}"
 export GIT_CACHE_PATH="${GIT_CACHE_PATH}"
 if [[ "$FRESH" == true ]]; then
 echo "Fresh sync requested. Removing existing cache and work dir."
 rm -rf "${GIT_CACHE_PATH}"
-rm -rf "${WORK_DIR}" "${TARBALL}"
+rm -rf "${TARBALL}"
 mkdir -p "${GIT_CACHE_PATH}"
 fi
 
