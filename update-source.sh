@@ -7,7 +7,7 @@ TARBALL="electron-${VERSION}.tar.gz"
 SPEC_FILE="electron.spec"
 GIT_CACHE_PATH="${PWD}/.git_cache"
 WORK_DIR="${PWD}/electron"
-DEPOT_TOOLS_DIR="${PWD}/depot_tools"
+DEPOT_TOOLS_DIR="${HOME}/depot_tools"
 
 ARCH=$(uname -m)
 case "$ARCH" in
@@ -28,13 +28,10 @@ if [[ "${1:-}" == "--fresh" ]]; then
 FRESH=true
 fi
 
-#installing dependencies
-sudo dnf install yarn
-
 if ! command -v gclient &> /dev/null; then
 echo "depot_tools not found. Installing..."
 git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git ${DEPOT_TOOLS_DIR}
-
+#sudo dnf install depot_tools && setup-depot-tools
 export PATH="${DEPOT_TOOLS_DIR}:${PATH}"
 echo "Installed depot_tools at $DEPOT_TOOLS_DIR and added to PATH."
  else
@@ -49,10 +46,10 @@ mkdir -p ${DEPOT_TOOLS_DIR}/.cipd_bin
 ln -sf ${DEPOT_TOOLS_DIR}/.cipd_client ${DEPOT_TOOLS_DIR}/.cipd_bin/cipd
 
 # Use a local CIPD cache directory inside depot_tools to store downloaded packages
-export CIPD_CACHE_DIR="${DEPOT_TOOLS_DIR}/.cipd_cache"
+export CIPD_CACHE_DIR="$PWD/depot_tools/.cipd_cache"
 mkdir -p "$CIPD_CACHE_DIR"
 
-export PATH="${DEPOT_TOOLS_DIR}/.cipd_bin:$PWD/depot_tools:$PATH"
+export PATH="$PWD/depot_tools/.cipd_bin:$PWD/depot_tools:$PATH"
 export PATH="${DEPOT_TOOLS_DIR}:${PATH}"
 cd ${DEPOT_TOOLS_DIR}
 
@@ -60,15 +57,15 @@ cd ${DEPOT_TOOLS_DIR}
 ./update_depot_tools
 ./gclient
 
+mkdir -p "${GIT_CACHE_PATH}"
 export GIT_CACHE_PATH="${GIT_CACHE_PATH}"
 if [[ "$FRESH" == true ]]; then
 echo "Fresh sync requested. Removing existing cache and work dir."
 rm -rf "${GIT_CACHE_PATH}"
-rm -rf "${TARBALL}"
+rm -rf "${WORK_DIR}" "${TARBALL}"
 mkdir -p "${GIT_CACHE_PATH}"
 fi
 
-rm -rf "${WORK_DIR}"
 mkdir "${WORK_DIR}"
 cd "${WORK_DIR}"
 
