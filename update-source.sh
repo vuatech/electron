@@ -71,7 +71,6 @@ cd "${WORK_DIR}"
 
 echo "Syncing electron dependendies"
 ${DEPOT_TOOLS_DIR}/gclient config --name=src/electron --unmanaged "${REPO_URL}"
-read -p "Press Enter"
 ${DEPOT_TOOLS_DIR}/gclient sync --with_branch_heads --with_tags
 
 echo "Fetching electron v${VERSION}"
