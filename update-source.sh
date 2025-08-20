@@ -49,10 +49,10 @@ mkdir -p ${DEPOT_TOOLS_DIR}/.cipd_bin
 ln -sf ${DEPOT_TOOLS_DIR}/.cipd_client ${DEPOT_TOOLS_DIR}/.cipd_bin/cipd
 
 # Use a local CIPD cache directory inside depot_tools to store downloaded packages
-export CIPD_CACHE_DIR="$PWD/depot_tools/.cipd_cache"
+export CIPD_CACHE_DIR="${DEPOT_TOOLS_DIR}/.cipd_cache"
 mkdir -p "$CIPD_CACHE_DIR"
 
-export PATH="$PWD/depot_tools/.cipd_bin:$PWD/depot_tools:$PATH"
+export PATH="${DEPOT_TOOLS_DIR}/.cipd_bin:$PWD/depot_tools:$PATH"
 export PATH="${DEPOT_TOOLS_DIR}:${PATH}"
 cd ${DEPOT_TOOLS_DIR}
 
