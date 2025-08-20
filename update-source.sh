@@ -7,7 +7,7 @@ TARBALL="electron-${VERSION}.tar.gz"
 SPEC_FILE="electron.spec"
 GIT_CACHE_PATH="${PWD}/.git_cache"
 WORK_DIR="${PWD}/electron"
-DEPOT_TOOLS_DIR="${HOME}/depot_tools"
+DEPOT_TOOLS_DIR="${PWD}/depot_tools"
 
 ARCH=$(uname -m)
 case "$ARCH" in
@@ -57,8 +57,6 @@ cd ${DEPOT_TOOLS_DIR}
 ./update_depot_tools
 ./gclient
 
-rm -rf "${WORK_DIR}"
-mkdir -p "${GIT_CACHE_PATH}"
 export GIT_CACHE_PATH="${GIT_CACHE_PATH}"
 if [[ "$FRESH" == true ]]; then
 echo "Fresh sync requested. Removing existing cache and work dir."
@@ -67,6 +65,7 @@ rm -rf "${TARBALL}"
 mkdir -p "${GIT_CACHE_PATH}"
 fi
 
+rm -rf "${WORK_DIR}"
 mkdir "${WORK_DIR}"
 cd "${WORK_DIR}"
 
