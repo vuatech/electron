@@ -86,6 +86,7 @@ mv "$TARBALL" ..
 
 echo "Created tarball: $TARBALL"
 
+cd ../
 if [[ -f "$SPEC_FILE" ]]; then
     sed -i "s/^%global electron_version .*/%global electron_version ${VERSION}/" "$SPEC_FILE"
     echo "Updated Version in $SPEC_FILE to: ${VERSION}"
