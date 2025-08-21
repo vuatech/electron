@@ -3,7 +3,7 @@
 Name:		electron-%{electon_version}
 Version:	1
 Release:	1
-Source0:	https://github.com/electron/electron/archive/%{version}/%{name}-%{version}.tar.gz
+Source0:	%{name}.tar.gz
 Summary:	Test
 URL:		https://github.com/electron/electron
 License:	GPL
