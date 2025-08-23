@@ -13,6 +13,7 @@ BuildRequires:	ninja
 BuildRequires:  gn
 BuildRequires:	gperf
 BuildRequires:	pkgconfig(glib)
+BuildRequires:	cargo
 
 %description
 
