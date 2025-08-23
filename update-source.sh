@@ -31,7 +31,7 @@ fi
 if [[ "$FRESH" == true ]]; then
 echo "Fresh sync requested. Removing existing cache and work dir."
 rm -rf "${GIT_CACHE_PATH}"
-rm -rf "${DEPOT_TOOLS_DIR}
+rm -rf "${DEPOT_TOOLS_DIR}"
 rm -rf "${WORK_DIR}" "${TARBALL}"
 mkdir -p "${GIT_CACHE_PATH}"
 fi
