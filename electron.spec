@@ -11,12 +11,13 @@ Group:		Test
 
 BuildRequires:	ninja
 BuildRequires:  gn
+BuildRequires:	gperf
+BuildRequires:	pkgconfig(glib)
 
 %description
 
 %prep
-%autosetup -p1 -n %{name}
-cd src
+%autosetup -p1 -n src
 export CHROMIUM_BUILDTOOLS_PATH=`pwd`/buildtools
 gn gen out/Release --args="import(\"//electron/build/args/release.gn\")"
 
@@ -26,6 +27,11 @@ electron/script/strip-binaries.py -d out/Release
 ninja -C out/Release electron:electron_dist_zip
 
 %install
+install -dm0755 %{buildroot}%{_libdir}/%{name}
+bsdtar -xf out/Release/dist.zip %{buildroot}%{_libdir}/%{mame}
+chmod u+s %{buildroot}%{_libdir}/%{name}/chrome-sandbox
 
 
 %files
+%license LICENSE LICENSE.chromium.html
+%{_libdir}/%{name}
