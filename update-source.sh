@@ -1,6 +1,9 @@
 #!/bin/bash
 set -euo pipefail
 
+# TODO
+# Fix cipd architecture dependent binary
+
 REPO_URL="https://github.com/electron/electron"
 VERSION="37.2.3"
 TARBALL="electron-${VERSION}.tar.gz"
