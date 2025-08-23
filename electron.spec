@@ -15,6 +15,7 @@ BuildRequires:	gperf
 BuildRequires:	pkgconfig(glib)
 BuildRequires:	cargo
 BuildRequires:	yarn
+BuildRequires:	go
 
 %description
 
