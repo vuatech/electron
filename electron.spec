@@ -31,7 +31,7 @@ ninja -C out/Release electron:electron_dist_zip
 
 %install
 install -dm0755 %{buildroot}%{_libdir}/%{name}
-bsdtar -xf out/Release/dist.zip %{buildroot}%{_libdir}/%{name}
+unzip -v out/Release/dist.zip -d %{buildroot}%{_libdir}/%{name}
 chmod u+s %{buildroot}%{_libdir}/%{name}/chrome-sandbox
 
 
