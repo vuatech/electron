@@ -4,10 +4,10 @@ Name:		electron-%{electon_version}
 Version:	1
 Release:	1
 Source0:	%{name}.tar.gz
-Summary:	Test
+Summary:	Build cross-platform desktop apps with JavaScript, HTML, and CSS
 URL:		https://github.com/electron/electron
-License:	GPL
-Group:		Test
+License:	MIT
+Group:		System/Development
 
 BuildRequires:	ninja
 BuildRequires:  gn
