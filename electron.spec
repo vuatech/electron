@@ -16,6 +16,7 @@ BuildRequires:	pkgconfig(glib)
 BuildRequires:	cargo
 BuildRequires:	yarn
 BuildRequires:	go
+BuildRequires:	pkgconfig(libnotify)
 
 %description
 
