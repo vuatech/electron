@@ -1,8 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
-# TODO
-# Fix cipd architecture dependent binary
+#TODO
+# Fix cipid architecture dependent binary
 
 REPO_URL="https://github.com/electron/electron"
 VERSION="37.2.3"
@@ -34,20 +34,21 @@ fi
 if [[ "$FRESH" == true ]]; then
 echo "Fresh sync requested. Removing existing cache and work dir."
 rm -rf "${GIT_CACHE_PATH}"
-rm -rf "${DEPOT_TOOLS_DIR}"
-rm -rf "${WORK_DIR}" "${TARBALL}"
+rm -rf "${DEPOT_TOOLS_DIR}" "${TARBALL}"
 mkdir -p "${GIT_CACHE_PATH}"
 fi
 
-if ! command -v gclient &> /dev/null; then
-echo "depot_tools not found. Installing..."
-git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git ${DEPOT_TOOLS_DIR}
-#sudo dnf install depot_tools && setup-depot-tools
+rm -rf "${WORK_DIR}"
+
+# if ! command -v gclient &> /dev/null; then
+# echo "depot_tools not found. Installing..."
+# git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git ${DEPOT_TOOLS_DIR}
+# #sudo dnf install depot_tools && setup-depot-tools
 export PATH="${DEPOT_TOOLS_DIR}:${PATH}"
-echo "Installed depot_tools at $DEPOT_TOOLS_DIR and added to PATH."
- else
- echo "depot_tools already available."
- fi
+# echo "Installed depot_tools at $DEPOT_TOOLS_DIR and added to PATH."
+#  else
+#  echo "depot_tools already available."
+#  fi
 
 # Download CIPD client as a single file
 curl -Lo ${DEPOT_TOOLS_DIR}/.cipd_client "https://chrome-infra-packages.appspot.com/client?platform=${CIPD_PLATFORM}"
@@ -82,7 +83,22 @@ cd src/electron
 git fetch --tags
 git checkout "v${VERSION}"
 ${DEPOT_TOOLS_DIR}/gclient sync -f
+cd ../
+export CHROMIUM_BUILDTOOLS_PATH=`pwd`/buildtools
 
+SYSROOT_BASE="${WORK_DIR}/src/build/linux"
+SYSROOT_DIR=""
+
+if [[ "$ARCH" == "x86_64" || "$ARCH" == "znver1" ]]; then
+    SYSROOT_DIR="${SYSROOT_BASE}/debian_bullseye_amd64-sysroot"
+elif [[ "$ARCH" == "aarch64" || "$ARCH" == "arm64" ]]; then
+    SYSROOT_DIR="${SYSROOT_BASE}/debian_bullseye_arm64-sysroot"
+fi
+
+GLIBCONFIG_PATH="${SYSROOT_DIR}/usr/lib/${ARCH}-linux-gnu/glib-2.0/include"
+
+gn gen out/Release --args="import(\"//electron/build/args/release.gn\")
+extra_cxxflags = [ \"-isystem${GLIBCONFIG_PATH}\" ]"
 
 cd "${WORK_DIR}"
 
